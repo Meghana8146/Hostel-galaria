@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Room</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <style>
+    body{
+      background-color: rgb(16, 105, 146); 
+    }
+    h1{
+        color:rgb(186, 226, 6)
+    }
+ form{
+     color:rgb(49, 217, 240);
+ }
+ tbody{
+     color:rgb(224, 109, 15);
+ }
+ thead{
+     color:rgb(0, 255, 85);
+ }
+  </style>
+
+</head>
+<body >
+    
+<div class="container">
+  <h1>Student Details</h1>
+    
+  <form>
+        
+    <div class="form-group">
+      <label>Sl. no:</label>
+      <input type="text" name="srl" class="form-control" value=" " required="">
+    </div>
+    
+    <div class="form-group">
+      <label>Student Name:</label>
+      <input type="text" name="name" class="form-control" value=" " required="">
+    </div>
+
+    <div class="form-group">
+        <label>Phone number:</label>
+        <input type="Telephone" name="phone" class="form-control" value=" " required="">
+      </div>
+      
+    <div class="form-group">
+        <label>Address:</label>
+        <input type="text" name="adrs" class="form-control" value=" " required="">
+      </div>
+      <div class="form-group">
+        <label>Guardian Number:</label>
+        <input type="Telephone" name="grd" class="form-control" value=" " required="">
+      </div>
+      <div class="form-group">
+        <label>Room Number:</label>
+        <input type="text" name="room" class="form-control" value=" " required="">
+      </div>
+   
+    <button type="submit" class="btn btn-success save-btn">Save</button>
+    
+  </form>
+  <br/>
+  <table class="table table-bordered data-table">
+    <thead>
+      <th>Sl.no</th>
+      <th>Student Name</th>
+      <th>Phone number</th>
+      <th>Address</th>
+      <th>Guardian Number</th>
+      <th>Room Number</th>
+
+      <th width="300px">Action</th>
+    </thead>
+    <tbody>
+    
+    </tbody>
+  </table>
+   
+</div>
+   
+<script type="text/javascript">
+   
+    $("form").submit(function(e){
+        e.preventDefault();
+        var srl = $("input[name='srl']").val();
+        var name = $("input[name='name']").val();
+        var phone = $("input[name='phone']").val();
+        var adrs = $("input[name='adrs']").val();
+        var grd = $("input[name='grd']").val();
+        var room = $("input[name='room']").val();
+
+        $(".data-table tbody").append("<tr data-srl='"+srl+"' data-name='"+name+"' data-phone='"+phone+"'' data-adrs='"+adrs+"' ' data-grd='"+grd+"' ' data-room='"+room+"'   > <td>"+srl+"</td><td>"+name+"</td><td>"+phone+"</td><td>"+adrs+"</td><td>"+grd+"</td><td>"+room+"</td><td><button class='btn btn-info btn-xs btn-edit'>Edit</button><button class='btn btn-danger btn-xs btn-delete'>Delete</button></td></tr>");
+    
+        $("input[name='srl']").val('');
+        $("input[name='name']").val('');
+        $("input[name='phone']").val('');
+        $("input[name='adrs']").val('');
+        $("input[name='grd']").val('');
+        $("input[name='room']").val('');
+    });
+   
+    $("body").on("click", ".btn-delete", function(){
+        $(this).parents("tr").remove();
+    });
+    
+    $("body").on("click", ".btn-edit", function(){
+        var srl = $(this).parents("tr").attr('data-srl');
+        var name = $(this).parents("tr").attr('data-name');
+        var phone = $(this).parents("tr").attr('data-phone');
+        var adrs = $(this).parents("tr").attr('data-adrs');
+        var grd = $(this).parents("tr").attr('data-grd');
+        var room = $(this).parents("tr").attr('data-room');
+    
+    
+        $(this).parents("tr").find("td:eq(0)").html('<input name="edit_srl" value="'+srl+'">');
+        $(this).parents("tr").find("td:eq(1)").html('<input name="edit_name" value="'+name+'">');
+        $(this).parents("tr").find("td:eq(2)").html('<input name="edit_phone" value="'+phone+'">');
+        $(this).parents("tr").find("td:eq(3)").html('<input name="edit_adrs" value="'+adrs+'">');
+        $(this).parents("tr").find("td:eq(4)").html('<input name="edit_grd" value="'+grd+'">');
+        $(this).parents("tr").find("td:eq(5)").html('<input name="edit_room" value="'+room+'">');
+    
+        $(this).parents("tr").find("td:eq(6)").prepend("<button class='btn btn-info btn-xs btn-update'>Update</button><button class='btn btn-warning btn-xs btn-cancel'>Cancel</button>")
+        $(this).hide();
+    });
+   
+    $("body").on("click", ".btn-cancel", function(){
+        var srl = $(this).parents("tr").attr('data-srl');
+        var name = $(this).parents("tr").attr('data-name');
+        var phone = $(this).parents("tr").attr('data-phone');
+        var adrs = $(this).parents("tr").attr('data-adrs');
+        var grd = $(this).parents("tr").attr('data-grd');
+        var room= $(this).parents("tr").attr('data-room');
+    
+        $(this).parents("tr").find("td:eq(0)").text(srl);
+        $(this).parents("tr").find("td:eq(1)").text(name);
+        $(this).parents("tr").find("td:eq(2)").text(phone);
+        $(this).parents("tr").find("td:eq(2)").text(adrs);
+        $(this).parents("tr").find("td:eq(2)").text(grd);
+        $(this).parents("tr").find("td:eq(2)").text(room);
+   
+        $(this).parents("tr").find(".btn-edit").show();
+        $(this).parents("tr").find(".btn-update").remove();
+        $(this).parents("tr").find(".btn-cancel").remove();
+    });
+   
+    $("body").on("click", ".btn-update", function(){
+        var srl = $(this).parents("tr").find("input[name='edit_srl']").val();
+        var name = $(this).parents("tr").find("input[name='edit_name']").val();
+        var phone = $(this).parents("tr").find("input[name='edit_phone']").val();
+        var adrs = $(this).parents("tr").find("input[name='edit_adrs']").val();
+        var grd = $(this).parents("tr").find("input[name='edit_grd']").val();
+        var room = $(this).parents("tr").find("input[name='edit_room']").val();
+    
+        $(this).parents("tr").find("td:eq(0)").text(srl);
+        $(this).parents("tr").find("td:eq(1)").text(name);
+        $(this).parents("tr").find("td:eq(2)").text(phone);
+        $(this).parents("tr").find("td:eq(3)").text(adrs);
+        $(this).parents("tr").find("td:eq(4)").text(grd);
+        $(this).parents("tr").find("td:eq(5)").text(room);
+     
+        $(this).parents("tr").attr('data-srl', srl);
+        $(this).parents("tr").attr('data-name', name);
+        $(this).parents("tr").attr('data-phone', phone);
+        $(this).parents("tr").attr('data-adrs', adrs);
+        $(this).parents("tr").attr('data-grd', grd);
+        $(this).parents("tr").attr('data-room', room);
+    
+        $(this).parents("tr").find(".btn-edit").show();
+        $(this).parents("tr").find(".btn-cancel").remove();
+        $(this).parents("tr").find(".btn-update").remove();
+    });
+    
+</script>
+     
+</body>
+</html>
